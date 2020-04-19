@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "angjs",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,8 +19,11 @@
     "@angular/platform-browser": "~9.1.1",
     "@angular/platform-browser-dynamic": "~9.1.1",
     "@angular/router": "~9.1.1",
+    "highcharts": "^8.0.4",
+    "highcharts-ng": "^1.2.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "underscore": "^1.10.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
