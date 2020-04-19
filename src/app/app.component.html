@@ -1,50 +1,8 @@
 <div class="header">
   <h1>Hydrane AngularJS Frontend Dev CS</h1>
-  <!-- action button Go -->
   <input type="button" value="Go" (click)="go()" />
 </div>
 <div class="content">
-
-  <!-- filters -->
-  <div class="filters">
-    Continent: <select name="continent">
-      <option value="ALL">All</option>
-      <option *ngFor="let continent of continentList" [value]="continent.value">{{ continent.name }}</option>
-    </select>
-    Metric: <select name="metric">
-      <option value="all">All</option>
-      <option value="areaInSqKm">Area in km^2</option>
-      <option value="population">Population</option>
-    </select>
-    Max results: <select name="maxResults">
-      <option value=5>5</option>
-      <option value=10>10</option>
-      <option value=15>15</option>
-      <option value=20>20</option>
-    </select>
-  <div>
-
-  <!-- results -->
-  <div class="results">
-    <div class="pie">
-    </div>
-
-    <div class="table">
-      <table>
-        <tr>
-          <th>continentName</th>
-          <th>countryName</th>
-          <th>areaInSqKm</th>
-          <th>population</th>
-        </tr>
-        <tr *ngFor="let country of countries">
-          <td>{{ country.continentName }}</td>
-          <td>{{ country.countryName }}</td>
-          <td>{{ country.areaInSqKm }}</td>
-          <td>{{ country.population }}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
+  <app-filter [continentList]="continentList" (filterEvent)="filterChanged($event)"></app-filter>
+  <app-results [countries]="countries"></app-results>
 </div>

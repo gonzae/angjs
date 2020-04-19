@@ -1,0 +1,27 @@
+<div class="results">
+<div class="pie">
+</div>
+
+<div class="table">
+  <table>
+    <tr>
+      <th (click)=sortBy($event.target) data-sort="ASC">continentName</th>
+      <th (click)=sortBy($event.target) data-sort="ASC">countryName</th>
+      <th (click)=sortBy($event.target) data-sort="ASC">areaInSqKm</th>
+      <th (click)=sortBy($event.target) data-sort="ASC">population</th>
+    </tr>
+    <tr *ngFor="let country of countries">
+      <td>{{ country.continentName }}</td>
+      <td>{{ country.countryName }}</td>
+      <td>{{ country.areaInSqKm }}</td>
+      <td>{{ country.population }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>TOTAL</strong></td>
+      <td><strong>{{ total.areaInSqKm }}</strong></td>
+      <td><strong>{{ total.population }}</strong></td>
+    </tr>
+  </table>
+</div>
+</div>

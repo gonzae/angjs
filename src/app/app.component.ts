@@ -1,64 +1,49 @@
 import { Component } from '@angular/core';
-import _ from 'underscore';
 
-const API_ENDPOINT_URL = 'http://api.geonames.org/countryInfoJSON?formatted=true&username=hydrane';
-
-interface Country {
-	continent: string;
-	capital: string;
-	languages: string;
-	geonameId: number;
-	south: number;
-	isoAlpha3: string;
-	north: number;
-	fipsCode: string;
-	population: string;
-	east: number;
-	isoNumeric: string;
-	areaInSqKm: string;
-	countryCode: string;
-	west: number;
-	countryName: string;
-	continentName: string;
-	currencyCode: string;
-}
+import { Country } from './country';
+import { CountryInfoService } from './country-info.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
-  // styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers: [CountryInfoService]
 })
 
 export class AppComponent {
 	countries : Array<Country>;
 	continentList : Array<{ name : string, value : string }>;
+	filter : any;
 
-	constructor() {
-		this.countries = [];
-		this.continentList = [];
+	constructor(private service: CountryInfoService) {
+		this.filter = {
+			continent: 'all', 
+			metric: 'all',
+			maxResults: 5
+		};
 	}
 
 	async go() {
-		if(!this.countries.length) await this.fetchData();
+		if(!this.service.fetched()) await this.service.fetchData();
+
+		this.applyFilter(this.service.getCountries());
+		this.continentList = this.service.getContinentList();
 	}
 
-	async fetchData() {
-		const res = await fetch(API_ENDPOINT_URL);
-		const parsedJSON = await res.json();
-		this.countries = parsedJSON.geonames;
-		this.continentList = this.getContinentListFromCountries(this.countries);
+	applyFilter(countries) {
+		if(this.filter.continent != 'all') {
+			countries = countries.filter( thisCountry => thisCountry.continent === this.filter.continent );
+		}
+
+		this.countries = countries;
 	}
 
-	getContinentListFromCountries(countries : Array<Country>) {
-		const filteredContinents = _.reduce( countries, (memo, country) => {
-			const continent = { name : country.continentName, value : country.continent };
-			if(!_.pluck(memo, 'value').includes(continent.value)) memo.push(continent);
-			return memo;
-		}, [] );
-		
-		// Sort them alphabetically
-		filteredContinents.sort( (a, b) => a.name > b.name ? 1 : -1 );
+	public filterChanged(change) {
+		this.filter = {
+			...this.filter,
+			[change.name]: change.value
+		};
 
-		return filteredContinents;
+		this.applyFilter(this.service.getCountries());
 	}
 }
