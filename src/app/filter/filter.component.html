@@ -1,17 +1,27 @@
-<div class="filters">
-	Continent: <select name="continent" (change)="filterChanged($event.target)">
-	<option value="all">All</option>
-	<option *ngFor="let continent of continentList" [value]="continent.value">{{ continent.name }}</option>
-</select>
-Metric: <select name="metric" (change)="filterChanged($event.target)">
-	<option value="all">All</option>
-	<option value="areaInSqKm">Area in km^2</option>
-	<option value="population">Population</option>
-</select>
-Max results: <select name="maxResults" (change)="filterChanged($event.target)">
-	<option value=5>5</option>
-	<option value=10>10</option>
-	<option value=15>15</option>
-	<option value=20>20</option>
-</select>
-<div>
+<div class="filter">
+	<span class="label">Continent</span>
+	<select name="continent" (change)="filterChanged($event.target)">
+		<option value="all">All</option>
+		<option *ngFor="let continent of continentList" [value]="continent.value">{{ continent.name }}</option>
+	</select>
+</div>
+<div class="filter">
+	<span class="label">Metric</span>
+	<select name="metric" (change)="filterChanged($event.target)">
+		<option value="all">All</option>
+		<option value="areaInSqKm">Area in km^2</option>
+		<option value="population">Population</option>
+	</select>
+</div>
+<div class="filter">
+	<span class="label">Max results</span>
+	<select name="maxResults" (change)="filterChanged($event.target)">
+		<option value=5>5</option>
+		<option value=10>10</option>
+		<option value=15>15</option>
+		<option value=20>20</option>
+	</select>
+</div>
+
+
+

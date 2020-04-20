@@ -1,0 +1,46 @@
+div.header, div.content {
+	margin: 40px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+}
+
+div.header {
+	flex-direction: row;
+}
+
+div.header h1 {
+	flex: 1;
+}
+
+div.header input[type=button] {
+	width: 150px;
+	margin-left: 40px;
+	background-color: #eee;
+	border: 3px solid #212529;
+}
+
+div.header input[type=button]:hover {
+	background-color: #CACACA;
+	color: white;
+	border: 3px solid #212529;
+}
+
+div.content {
+	display: flex;
+	flex-direction: column;
+}
+
+div.content .filters, div.content .results {
+	flex: 1;
+	width: 100%;
+}
+
+div.content .filters {
+	padding: 20px;
+	background-color: #eee;
+	align-items: baseline;
+	justify-content: flex-start;
+    display: flex;
+}

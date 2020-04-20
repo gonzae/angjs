@@ -61,7 +61,7 @@ export class ResultsComponent implements OnChanges {
 			  },
 			  accessibility: {
 			    point: {
-			      valueSuffix: '%'
+			      valueSuffix: ' %'
 			    }
 			  },
 			  plotOptions: {
@@ -79,7 +79,7 @@ export class ResultsComponent implements OnChanges {
 		        colorByPoint: true,
 		        data
 		    } ]
-		});
+		} as any);
 	}
 
 	updateChart(countries) {
@@ -107,7 +107,7 @@ export class ResultsComponent implements OnChanges {
 	}
 
 	sortColumn(target) {
-		const targetName = target.textContent;
+		const targetName = target.dataset.field;
 		const sortType = target.dataset.sort;
 
 		this.countries.sort((a, b) => {

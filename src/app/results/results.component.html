@@ -1,22 +1,23 @@
-<div class="results">
-<div class="pie">
-  <div [chart]="areaChart"></div>
-  <div [chart]="populationChart"></div>
+<div class="pies">
+  <div class="pie" [chart]="areaChart"></div>
+  <div class="pie" [chart]="populationChart"></div>
 </div>
 
 <div class="table">
   <table>
     <tr>
-      <th (click)=sortColumn($event.target) data-sort="ASC">continentName</th>
-      <th (click)=sortColumn($event.target) data-sort="ASC">countryName</th>
-      <th (click)=sortColumn($event.target) data-sort="ASC">areaInSqKm</th>
-      <th (click)=sortColumn($event.target) data-sort="ASC">population</th>
+      <th class="continent-name" (click)=sortColumn($event.target) data-field="continentName" data-sort="ASC">Continent</th>
+      <th class="country-name" (click)=sortColumn($event.target) data-field="countryName" data-sort="ASC">Country</th>
+      <th class="area" (click)=sortColumn($event.target) data-field="areaInSqKm" data-sort="ASC">Area (m^2)</th>
+      <th class="population" (click)=sortColumn($event.target) data-field="population" data-sort="ASC">Population</th>
     </tr>
     <tr *ngFor="let country of countries">
-      <td>{{ country.continentName }}</td>
-      <td>{{ country.countryName }}</td>
-      <td>{{ country.areaInSqKm }}</td>
-      <td>{{ country.population }}</td>
+      <td class="continent-name">{{ country.continentName }}</td>
+      <td class="country-name">
+        <img [src]="'https://www.countryflags.io/' + country.countryCode + '/flat/24.png'">{{ country.countryName }}
+      </td>
+      <td class="area">{{ country.areaInSqKm }}</td>
+      <td class="population">{{ country.population }}</td>
     </tr>
     <tr>
       <td></td>
@@ -25,5 +26,4 @@
       <td><strong>{{ total.population }}</strong></td>
     </tr>
   </table>
-</div>
 </div>

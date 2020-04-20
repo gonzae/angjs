@@ -1,0 +1,44 @@
+div.pies {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	padding: 20px;
+}
+
+div.pies div.pie {
+	flex: 1;
+}
+
+div.table {
+	width: 100%;
+	flex: 1;
+	background-color: #eee;
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+div.table table {
+	background-color: white;
+	width: 70%;
+}
+
+div.table table tr th {
+	cursor: pointer;
+}
+
+div.table table tr .continent-name, div.table table tr .country-name {
+	text-align: left;
+}
+
+div.table table tr td.continent-name {
+	width: 30%;
+}
+
+div.table table tr td.country-name {
+	width: 100%;
+}
+
+div.table table tr td.country-name img {
+	margin-right: 10px;
+}

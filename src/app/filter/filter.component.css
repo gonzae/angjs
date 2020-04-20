@@ -1,0 +1,7 @@
+div.filter:not(:last-child) {
+	margin-right: 20px;
+}
+
+div.filter span.label {
+	margin-right: 10px;
+}
