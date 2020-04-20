@@ -24,11 +24,21 @@ export class AppComponent {
 		this.maxResults = 5;
 	}
 
-	async go() {
-		if(!this.service.fetched()) await this.service.fetchData();
+	async go(target) {
+		target.disabled = true;
+		let storedContent = target.value;
+		target.value = 'Fetching...';
+		if(!this.hasResults()) await this.service.fetchData();
+		target.disabled = false;
+		target.value = storedContent;
 
 		this.applyFilter(this.service.getCountries());
 		this.continentList = this.service.getContinentList();
+
+	}
+
+	hasResults() {
+		return this.service.fetched();
 	}
 
 	applyFilter(countries) {

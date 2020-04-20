@@ -32,7 +32,7 @@ export class ResultsComponent implements OnChanges {
 	}
 
 	buildChartForType(countries, chartType) {
-		countries = this.sortby(countries, chartType, 'DESC');
+		countries = this.sortBy(countries, chartType, 'DESC');
 
 		if(! countries.length) return;;
 
@@ -98,7 +98,7 @@ export class ResultsComponent implements OnChanges {
 		} );
 	}
 
-	sortby(countries, fieldName, dir) {
+	sortBy(countries, fieldName, dir) {
 		countries.sort((a, b) => {
 			if( dir === 'ASC' ) return a[fieldName] < b[fieldName] ? -1 : 1;
 			else return a[fieldName] > b[fieldName] ? -1 : 1;
@@ -110,10 +110,7 @@ export class ResultsComponent implements OnChanges {
 		const targetName = target.dataset.field;
 		const sortType = target.dataset.sort;
 
-		this.countries.sort((a, b) => {
-			if( sortType === 'ASC' ) return a[targetName] < b[targetName] ? -1 : 1;
-			else return a[targetName] > b[targetName] ? -1 : 1;
-		} );
+		this.countries = this.sortBy(this.countries, targetName, sortType);
 
 		target.dataset.sort = sortType === 'ASC' ? 'DESC' : 'ASC';
 	}

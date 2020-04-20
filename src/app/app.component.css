@@ -15,13 +15,13 @@ div.header h1 {
 }
 
 div.header input[type=button] {
-	width: 150px;
+	min-width: 150px;
 	margin-left: 40px;
 	background-color: #eee;
 	border: 3px solid #212529;
 }
 
-div.header input[type=button]:hover {
+div.header input[type=button]:hover:not(:disabled) {
 	background-color: #CACACA;
 	color: white;
 	border: 3px solid #212529;

@@ -1,7 +1,7 @@
 <div class="header">
-  <h1>Hydrane AngularJS Frontend Dev CS <input type="button" value="Go!" (click)="go()" /></h1>
+  <h1>Hydrane AngularJS Frontend Dev CS <input type="button" value="Go!" (click)="go($event.target)" /></h1>
 </div>
 <div class="content">
-  <app-filter class="filters" [continentList]="continentList" (filterEvent)="filterChanged($event)"></app-filter>
-  <app-results class="results" [countries]="countries" [metric]="metric" [maxResults]="maxResults"></app-results>
+  <app-filter class="filters" [enabled]="hasResults()" [continentList]="continentList" (filterEvent)="filterChanged($event)"></app-filter>
+  <app-results *ngIf="hasResults()" class="results" [countries]="countries" [metric]="metric" [maxResults]="maxResults"></app-results>
 </div>

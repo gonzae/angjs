@@ -1,7 +1,7 @@
 div.pies {
 	flex: 1;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	padding: 20px;
 }
 

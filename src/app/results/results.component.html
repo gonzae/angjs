@@ -1,6 +1,6 @@
 <div class="pies">
-  <div class="pie" [chart]="areaChart"></div>
-  <div class="pie" [chart]="populationChart"></div>
+  <div *ngIf="metric === 'areaInSqKm' || metric === 'all'" class="pie" [chart]="areaChart"></div>
+  <div *ngIf="metric === 'population' || metric === 'all'" class="pie" [chart]="populationChart"></div>
 </div>
 
 <div class="table">

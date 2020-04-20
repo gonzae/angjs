@@ -7,6 +7,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange } from 
 })
 export class FilterComponent implements OnChanges {
 	@Input() continentList : Array<{ name : string, value : string }>
+	@Input() enabled : boolean;
 	@Output() filterEvent = new EventEmitter<any>();
 
 	constructor() {	}
