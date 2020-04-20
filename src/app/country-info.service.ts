@@ -22,7 +22,15 @@ export class CountryInfoService {
 	public async fetchData() {
 		const res = await fetch(API_ENDPOINT_URL);
 		const parsedJSON = await res.json();
-		this.countries = parsedJSON.geonames;
+		
+
+		this.countries = parsedJSON.geonames.map( thisCountry => {
+			return {
+				...thisCountry,
+				population: parseInt(thisCountry.population),
+				areaInSqKm: parseFloat(thisCountry.areaInSqKm)
+			}
+		} );
 
 		const filteredContinents = parsedJSON.geonames.reduce( (memo, country) => {
 			const continent = { name : country.continentName, value : country.continent };

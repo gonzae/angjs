@@ -4,5 +4,5 @@
 </div>
 <div class="content">
   <app-filter [continentList]="continentList" (filterEvent)="filterChanged($event)"></app-filter>
-  <app-results [countries]="countries"></app-results>
+  <app-results [countries]="countries" [metric]="metric" [maxResults]="maxResults"></app-results>
 </div>
