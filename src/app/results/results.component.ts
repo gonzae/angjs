@@ -29,9 +29,13 @@ export class ResultsComponent implements OnChanges {
 			if(changes.countries.currentValue) this.updateTotal(changes.countries.currentValue);
 			if(changes.countries.currentValue) this.updateChart(changes.countries.currentValue);
 		}
+
+		if(changes.maxResults) {
+			this.updateChart(this.countries);	
+		}
 	}
 
-	buildChartForType(countries, chartType) {
+	buildChartForType(countries, chartType, title) {
 		countries = this.sortBy(countries, chartType, 'DESC');
 
 		if(! countries.length) return;;
@@ -54,7 +58,7 @@ export class ResultsComponent implements OnChanges {
 			    type: 'pie'
 			  },
 				title: {
-				    text: chartType
+				    text: title
 				},
 			  tooltip: {
 			    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -83,8 +87,8 @@ export class ResultsComponent implements OnChanges {
 	}
 
 	updateChart(countries) {
-		this.areaChart = this.buildChartForType(countries, 'areaInSqKm');
-		this.populationChart = this.buildChartForType(countries, 'population');
+		this.areaChart = this.buildChartForType(countries, 'areaInSqKm', 'Area');
+		this.populationChart = this.buildChartForType(countries, 'population', 'Population');
 	}
 
 	updateTotal(countries) {

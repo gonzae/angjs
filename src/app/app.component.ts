@@ -13,7 +13,6 @@ import { CountryInfoService } from './country-info.service';
 export class AppComponent {
 	countries : Array<Country>;
 	continentList : Array<{ name : string, value : string }>;
-	filter : any;
 	continent : string;
 	metric : string;
 	maxResults : number;
