@@ -15,12 +15,12 @@ Clone this repo:
 git clone git@github.com:gonzae/angjs.git
 ```
 
-Install dependencies
+Install dependencies:
 ```
 npm install
 ```
 
-Start
+Start the server:
 ```
 npm start
 ```
