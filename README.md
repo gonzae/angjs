@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Requirements
 
 Node >= v10.13.0
+
 NPM >= v6.4.1
 
 ## How to run it
