@@ -1,0 +1,28 @@
+table {
+	background-color: white;
+	width: 70%;
+}
+
+table tr th {
+	cursor: pointer;
+}
+
+table tr .continent-name, div.table table tr .country-name {
+	text-align: left;
+}
+
+table tr .continent-name {
+	width: 30%;
+}
+
+table tr .country-name {
+	min-width: 30%;
+}
+
+table tr .area, table tr .population {
+	width: 20%;
+}
+
+table tr td.country-name img {
+	margin-right: 10px;
+}
