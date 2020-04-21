@@ -1,2 +1,12 @@
-<app-pies class="pies" [countries]="countries" [metric]="metric" [maxResults]="maxResults"></app-pies>
-<app-table class="table" [countries]="countries" [metric]="metric"></app-table>
+<app-pies
+	class="pies"
+	[countries]="countries"
+	[metric]="filter.metric"
+	[maxResults]="filter.maxResults"
+></app-pies>
+<app-table
+	class="table"
+	[countries]="countries"
+	[showAreaColumn]="showAreaColumn()"
+	[showPopulationColumn]="showPopulationColumn()"
+></app-table>

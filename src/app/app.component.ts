@@ -13,14 +13,14 @@ import { CountryInfoService } from './country-info.service';
 export class AppComponent {
 	countries : Array<Country>;
 	continentList : Array<{ name : string, value : string }>;
-	continent : string;
-	metric : string;
-	maxResults : number;
+	filter : { continent : string, metric : string, maxResults : number };
 
 	constructor(private service: CountryInfoService) {
-		this.continent = 'all';
-		this.metric = 'all';
-		this.maxResults = 5;
+		this.filter = {
+			continent: 'all',
+			metric: 'all',
+			maxResults: 5
+		};
 	}
 
 	async go(target) {
@@ -31,26 +31,25 @@ export class AppComponent {
 		target.disabled = false;
 		target.value = storedContent;
 
-		this.applyFilter(this.service.getCountries());
+		this.applyFilter(this.service.getCountries(), this.filter);
 		this.continentList = this.service.getContinentList();
-
 	}
 
 	hasResults() {
 		return this.service.fetched();
 	}
 
-	applyFilter(countries) {
-		if(this.continent != 'all') {
-			countries = countries.filter( thisCountry => thisCountry.continent === this.continent );
+	applyFilter(countries, filter) {
+		if(filter.continent != 'all') {
+			countries = countries.filter( thisCountry => thisCountry.continent === filter.continent );
 		}
 
 		this.countries = countries;
 	}
 
 	public filterChanged(change) {
-		this[change.name] = change.value;
+		this.filter[change.name] = change.value;
 
-		this.applyFilter(this.service.getCountries());
+		this.applyFilter(this.service.getCountries(), this.filter);
 	}
 }
