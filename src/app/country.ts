@@ -7,10 +7,10 @@ export interface Country {
 	isoAlpha3: string;
 	north: number;
 	fipsCode: string;
-	population: string;
+	population: number;
 	east: number;
 	isoNumeric: string;
-	areaInSqKm: string;
+	areaInSqKm: number;
 	countryCode: string;
 	west: number;
 	countryName: string;

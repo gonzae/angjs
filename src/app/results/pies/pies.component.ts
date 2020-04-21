@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 
+import { Country } from '../../country';
+
 @Component({
   selector: 'app-pies',
   templateUrl: './pies.component.html',
@@ -8,81 +10,79 @@ import { Chart } from 'angular-highcharts';
 })
 export class PiesComponent implements OnChanges {
 	@Input() countries : Array<any>;
-	@Input() metric : string;
-	@Input() maxResults : number;
+	@Input() showAreaChart : boolean;
+	@Input() showPopulationChart : boolean;
+	@Input() chartMaxResults : number;
 
-	areaChart : Chart;
-	populationChart : Chart;
+	public areaChart : Chart;
+	public populationChart : Chart;
 
 	constructor() { }
 
 	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
 		if(changes.countries) {
-			if(changes.countries.currentValue) this.updateChart(changes.countries.currentValue);
+			if(this.showAreaChart) this.areaChart = this._buildChart(changes.countries.currentValue, 'areaInSqKm', 'Area', this.chartMaxResults);
+			if(this.showPopulationChart) this.populationChart = this._buildChart(changes.countries.currentValue, 'population', 'Population', this.chartMaxResults);
 		}
 
-		if(changes.maxResults) {
-			this.updateChart(this.countries);
+		if(changes.chartMaxResults) {
+			if(this.showAreaChart) this.areaChart = this._buildChart(this.countries, 'areaInSqKm', 'Area', changes.chartMaxResults.currentValue);
+			if(this.showPopulationChart) this.populationChart = this._buildChart(this.countries, 'population', 'Population', changes.chartMaxResults.currentValue);
 		}
 	}
 
-	buildChartForType(countries, chartType, title) {
-		countries = this.sortBy(countries, chartType, 'DESC');
+	private _buildChart(countries: Array<Country>, chartType: 'areaInSqKm' | 'population', title: string, maxResults: number) : Chart {
+		countries = this._sortBy(countries, chartType, 'DESC');
 
 		if(! countries.length) return;;
 
 		const data = countries.reduce( (data, country) => {
-			if(data.length <= this.maxResults) {
+			if(data.length <= maxResults) {
 				data.push( {name : country.countryName, y: country[chartType]} );
 			} else {
-				const accumulated = data[this.maxResults].y + country[chartType];
-				data[this.maxResults] = { name : 'Other', y: accumulated };
+				const accumulated = data[maxResults].y + country[chartType];
+				data[this.chartMaxResults] = { name : 'Other', y: accumulated };
 			}
 			return data;
 		}, [] );
 
 		return new Chart({
 			chart: {
-			    plotBackgroundColor: null,
-			    plotBorderWidth: null,
-			    plotShadow: false,
-			    type: 'pie'
-			  },
-				title: {
-				    text: title
-				},
-			  tooltip: {
-			    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-			  },
-			  accessibility: {
-			    point: {
-			      valueSuffix: ' %'
-			    }
-			  },
-			  plotOptions: {
-			    pie: {
-			      allowPointSelect: true,
-			      cursor: 'pointer',
-			      dataLabels: {
-			        enabled: true,
-			        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-			      }
-			    }
-			  },
-		    series: [{
-		        name: 'Brands',
-		        colorByPoint: true,
-		        data
-		    } ]
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+			},
+			title: {
+				text: title
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			accessibility: {
+				point: {
+					valueSuffix: ' %'
+				}
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+					}
+				}
+			},
+			series: [{
+				name: title,
+				colorByPoint: true,
+				data
+			} ]
 		} as any);
 	}
 
-	updateChart(countries) {
-		this.areaChart = this.buildChartForType(countries, 'areaInSqKm', 'Area');
-		this.populationChart = this.buildChartForType(countries, 'population', 'Population');
-	}
-
-	sortBy(countries, fieldName, dir) {
+	private _sortBy(countries: Array<Country>, fieldName: string, dir: 'ASC' | 'DESC') : Array<Country> {
 		countries.sort((a, b) => {
 			if( dir === 'ASC' ) return a[fieldName] < b[fieldName] ? -1 : 1;
 			else return a[fieldName] > b[fieldName] ? -1 : 1;

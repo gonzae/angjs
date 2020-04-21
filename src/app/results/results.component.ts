@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
+import { CountryService } from '../country.service';
+import { Country } from '../country';
 
 @Component({
   selector: 'app-results',
@@ -6,18 +8,30 @@ import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnChanges {
-	@Input() countries : Array<any>;
 	@Input() filter : { continent : string, metric : string, maxResults : number };
+	public countries : Array<Country>;
+	public showArea : boolean;
+	public showPopulation : boolean;
+	public chartMaxResults : number;
 
-	constructor() { }
-
-	ngOnChanges(changes: {[propKey: string]: SimpleChange}) { }
-
-	showAreaColumn() {
-		return this.filter.metric === 'areaInSqKm' || this.filter.metric === 'all';
+	constructor(private countryService: CountryService) {
+		this.filter = {
+			continent: null,
+			metric: null,
+			maxResults: 5
+		};
+		this.countries = [];
+		this.showArea = true;
+		this.showPopulation = true;
+		this.chartMaxResults = 5;
 	}
 
-	showPopulationColumn() {
-		return this.filter.metric === 'population' || this.filter.metric === 'all';
+	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+		if(changes.filter) {
+			this.countries = this.countryService.getCountries(changes.filter.currentValue.continent);	
+			this.showArea = (!changes.filter.currentValue.metric) || changes.filter.currentValue.metric === 'areaInSqKm';
+			this.showPopulation = (!changes.filter.currentValue.metric) || changes.filter.currentValue.metric === 'population';
+			this.chartMaxResults = changes.filter.currentValue.maxResults;
+		}
 	}
 }

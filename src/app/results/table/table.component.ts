@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Country } from '../../country';
 
 @Component({
   selector: 'app-table',
@@ -6,11 +7,11 @@ import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnChanges {
-	@Input() countries : Array<any>;
+	@Input() countries : Array<Country>;
 	@Input() showAreaColumn : boolean;
 	@Input() showPopulationColumn : boolean;
 
-	total : { areaInSqKm: number, population: number };
+	public total : { areaInSqKm: number, population: number };
 
 	constructor() {
 		this.total = {
@@ -21,11 +22,23 @@ export class TableComponent implements OnChanges {
 
 	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
 		if(changes.countries) {
-			if(changes.countries.currentValue) this.updateTotal(changes.countries.currentValue);
+			if(changes.countries.currentValue) this._updateTotal(changes.countries.currentValue);
 		}
 	}
 
-	updateTotal(countries) {
+	public sortColumn(target : any) : void {
+		const fieldName = target.dataset.field;
+		const dir = target.dataset.sort;
+
+		this.countries.sort((a, b) => {
+			if( dir === 'ASC' ) return a[fieldName] < b[fieldName] ? -1 : 1;
+			else return a[fieldName] > b[fieldName] ? -1 : 1;
+		} );
+
+		target.dataset.sort = dir === 'ASC' ? 'DESC' : 'ASC';
+	}
+
+	private _updateTotal(countries : Array<Country>) : void {
 		this.total = countries.reduce( (total, country) => {
 			total.areaInSqKm += country.areaInSqKm;
 			total.population += country.population;
@@ -34,23 +47,6 @@ export class TableComponent implements OnChanges {
 			areaInSqKm : 0,
 			population : 0
 		} );
-	}
-
-	sortBy(countries, fieldName, dir) {
-		countries.sort((a, b) => {
-			if( dir === 'ASC' ) return a[fieldName] < b[fieldName] ? -1 : 1;
-			else return a[fieldName] > b[fieldName] ? -1 : 1;
-		} );
-		return countries
-	}
-
-	sortColumn(target) {
-		const targetName = target.dataset.field;
-		const sortType = target.dataset.sort;
-
-		this.countries = this.sortBy(this.countries, targetName, sortType);
-
-		target.dataset.sort = sortType === 'ASC' ? 'DESC' : 'ASC';
 	}
 
 }

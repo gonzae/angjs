@@ -1,14 +1,14 @@
 <div class="filter">
 	<span class="label">Continent</span>
 	<select name="continent" (change)="filterChanged($event.target)" [disabled]="!enabled">
-		<option value="all">All</option>
+		<option value="null">All</option>
 		<option *ngFor="let continent of continentList" [value]="continent.value">{{ continent.name }}</option>
 	</select>
 </div>
 <div class="filter">
 	<span class="label">Metric</span>
 	<select name="metric" (change)="filterChanged($event.target)" [disabled]="!enabled">
-		<option value="all">All</option>
+		<option value="null">All</option>
 		<option value="areaInSqKm">Area in km^2</option>
 		<option value="population">Population</option>
 	</select>

@@ -1,55 +1,48 @@
 import { Component } from '@angular/core';
 
 import { Country } from './country';
-import { CountryInfoService } from './country-info.service';
+import { CountryService } from './country.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [CountryInfoService]
+  providers: [CountryService]
 })
 
 export class AppComponent {
-	countries : Array<Country>;
-	continentList : Array<{ name : string, value : string }>;
-	filter : { continent : string, metric : string, maxResults : number };
+	filter: { continent? : string, metric? : string, maxResults : number };
+	continentList: Array<{ name : string, value : string }>;
 
-	constructor(private service: CountryInfoService) {
+	constructor(private countryService: CountryService) {
+		this.continentList = [];
 		this.filter = {
-			continent: 'all',
-			metric: 'all',
+			continent: null,
+			metric: null,
 			maxResults: 5
 		};
 	}
 
-	async go(target) {
+	async go(target : any) {
 		target.disabled = true;
 		let storedContent = target.value;
 		target.value = 'Fetching...';
-		if(!this.hasResults()) await this.service.fetchData();
+		if(!this.hasResults()) await this.countryService.fetch();
 		target.disabled = false;
 		target.value = storedContent;
 
-		this.applyFilter(this.service.getCountries(), this.filter);
-		this.continentList = this.service.getContinentList();
+		this.continentList = this.countryService.getContinentList();
 	}
 
-	hasResults() {
-		return this.service.fetched();
+	public hasResults() : boolean {
+		return this.countryService.isLoaded();
 	}
 
-	applyFilter(countries, filter) {
-		if(filter.continent != 'all') {
-			countries = countries.filter( thisCountry => thisCountry.continent === filter.continent );
-		}
+	public filterChanged(change : any) : void {
+		let filter = Object.assign({}, this.filter);
+		
+		filter[change.name] = change.value === 'null' ? null : change.value;
 
-		this.countries = countries;
-	}
-
-	public filterChanged(change) {
-		this.filter[change.name] = change.value;
-
-		this.applyFilter(this.service.getCountries(), this.filter);
+		this.filter = filter;
 	}
 }

@@ -1,12 +1,13 @@
 <app-pies
 	class="pies"
 	[countries]="countries"
-	[metric]="filter.metric"
-	[maxResults]="filter.maxResults"
+	[showAreaChart]="showArea"
+	[showPopulationChart]="showPopulation"
+	[chartMaxResults]="chartMaxResults"
 ></app-pies>
 <app-table
 	class="table"
 	[countries]="countries"
-	[showAreaColumn]="showAreaColumn()"
-	[showPopulationColumn]="showPopulationColumn()"
+	[showAreaColumn]="showArea"
+	[showPopulationColumn]="showPopulation"
 ></app-table>

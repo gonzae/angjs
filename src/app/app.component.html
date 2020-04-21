@@ -3,5 +3,5 @@
 </div>
 <div class="content">
   <app-filter class="filters" [enabled]="hasResults()" [continentList]="continentList" (filterEvent)="filterChanged($event)"></app-filter>
-  <app-results *ngIf="hasResults()" class="results" [countries]="countries" [filter]="filter"></app-results>
+  <app-results *ngIf="hasResults()" class="results" [filter]="filter"></app-results>
 </div>
